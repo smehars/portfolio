@@ -1,6 +1,9 @@
 services:
   web-app:
-    buikd: .
+    build: .
     ports:
-      - "3000:3000"
-    command: npm run dev
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev -- --host
