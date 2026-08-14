@@ -2,9 +2,9 @@
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-100">
-      <h1 className="text-3xl font-bold text-center pt-10">
-        Portfolio
+    <div className="min-h-screen bg-canvas text-ink font-sans flex items-center justify-center">
+      <h1 className="text-4xl font-bold">
+        hello, i'm <span className="text-lavender">mehar</span>
       </h1>
     </div>
   )
