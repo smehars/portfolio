@@ -10,7 +10,12 @@ export default {
         sans: ["DM Sans", "sans-serif"],
       },
       colors: {
-        canvas: "#15131A",
+        canvas: {
+          DEFAULT: "#15131A",
+          2: "#1B1522",
+          3: "#211829",
+          4: "#271B31",
+        },
         lavender: "#CDB4DB",
         ink: "#E7E3ED",
         mist: "#9C93AA",
