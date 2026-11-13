@@ -62,6 +62,24 @@ function SmallCard({ project }: { project: Project }) {
     <li className="flex flex-col rounded-xl border border-lavender/20 bg-canvas p-5">
       <h4 className="font-bold">{project.title}</h4>
       <p className="mt-2 text-sm text-ink/90">{project.summary}</p>
+      {project.highlights.length > 0 && (
+        <ul className="mt-3 space-y-1 text-sm text-lavender">
+          {project.highlights.map((highlight) => (
+            <li key={highlight}>{highlight}</li>
+          ))}
+        </ul>
+      )}
+      {project.links && (
+        <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+          {project.links.map((item) => (
+            <li key={item.href}>
+              <a className={link} href={item.href} target="_blank" rel="noreferrer">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
       <TechTags tech={project.tech} />
     </li>
   )

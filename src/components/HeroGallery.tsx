@@ -50,6 +50,8 @@ function HeroGallery() {
       <img
         key={photo.src}
         src={photo.src}
+        srcSet={`${photo.src} 800w, ${photo.src.replace('.webp', '-1200.webp')} 1200w`}
+        sizes="(min-width: 1280px) 576px, (min-width: 1024px) 480px, (min-width: 768px) 416px, 100vw"
         alt={photo.alt}
         width={800}
         height={1067}
