@@ -17,6 +17,7 @@ export default {
           4: "#271B31",
         },
         lavender: "#CDB4DB",
+        lilac: "#DDB8FF",
         ink: "#E7E3ED",
         mist: "#9C93AA",
       },

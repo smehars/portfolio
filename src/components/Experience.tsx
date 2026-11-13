@@ -3,8 +3,40 @@ import { roles } from '../content/experience'
 const todo = 'rounded border border-dashed border-lavender/50 px-1.5 py-0.5 text-sm text-lavender'
 const siteCard = 'block h-full rounded-xl border border-lavender/20 bg-canvas p-5'
 
+const highlight = 'font-semibold text-lilac'
+
+// Renders **highlighted words** and [highlighted links](https://url) inside a string.
 function Text({ children }: { children: string }) {
-  return children.startsWith('TODO') ? <span className={todo}>{children}</span> : <>{children}</>
+  if (children.startsWith('TODO')) return <span className={todo}>{children}</span>
+  const parts = children.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g)
+  return (
+    <>
+      {parts.map((part, i) => {
+        const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/)
+        if (link) {
+          return (
+            <a
+              key={i}
+              href={link[2]}
+              target="_blank"
+              rel="noreferrer"
+              className={`${highlight} underline decoration-lilac/50 underline-offset-4 hover:decoration-lilac`}
+            >
+              {link[1]}
+            </a>
+          )
+        }
+        if (part.startsWith('**')) {
+          return (
+            <strong key={i} className={highlight}>
+              {part.slice(2, -2)}
+            </strong>
+          )
+        }
+        return part
+      })}
+    </>
+  )
 }
 
 function Experience() {
@@ -29,7 +61,7 @@ function Experience() {
               ))}
             </ul>
             {role.sites && (
-              <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:-mr-24 lg:grid-cols-4">
+              <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:-mr-24 lg:grid-cols-3">
                 {role.sites.map((site) => {
                   const body = (
                     <>

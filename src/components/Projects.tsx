@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { projects, type Project } from '../content/projects'
 
 const link =
@@ -15,51 +16,122 @@ function TechTags({ tech }: { tech: string[] }) {
   )
 }
 
-function FeaturedCard({ project }: { project: Project }) {
+// Link rules for cards:
+// - One link: the whole card is the link.
+// - Two or more: the first link goes on the title and picture, and the rest
+//   are listed under the description.
+function CardShell({
+  project,
+  className,
+  children,
+}: {
+  project: Project
+  className: string
+  children: ReactNode
+}) {
+  const only = project.links?.length === 1 ? project.links[0] : null
   return (
-    <li className="flex flex-col overflow-hidden rounded-2xl border border-lavender/20 bg-canvas">
-      {project.image ? (
-        <img
-          src={project.image.src}
-          alt={project.image.alt}
-          width={project.image.width}
-          height={project.image.height}
-          loading="lazy"
-          className="aspect-video w-full object-cover"
-        />
+    <li>
+      {only ? (
+        <a
+          href={only.href}
+          target="_blank"
+          rel="noreferrer"
+          className={`${className} transition-colors hover:border-lavender/60`}
+        >
+          {children}
+        </a>
       ) : (
-        <div className="flex aspect-video w-full items-center justify-center border-b border-dashed border-lavender/40 text-sm text-lavender">
-          TODO: picture
-        </div>
+        <div className={className}>{children}</div>
+      )}
+    </li>
+  )
+}
+
+function CardLinks({ project, className }: { project: Project; className: string }) {
+  const links = project.links ?? []
+  if (links.length === 0) return null
+  // The whole card is already a link, so show its label as plain text.
+  if (links.length === 1) return <p className={`${className} ${link}`}>{links[0].label}</p>
+  return (
+    <ul className={`${className} flex flex-wrap gap-x-5 gap-y-2`}>
+      {links.slice(1).map((item) => (
+        <li key={item.href}>
+          <a className={link} href={item.href} target="_blank" rel="noreferrer">
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function FeaturedCard({ project }: { project: Project }) {
+  const links = project.links ?? []
+  const primary = links.length > 1 ? links[0] : null
+
+  const picture = project.image ? (
+    <img
+      src={project.image.src}
+      alt={project.image.alt}
+      width={project.image.width}
+      height={project.image.height}
+      loading="lazy"
+      className="aspect-video w-full object-cover"
+    />
+  ) : (
+    <div className="flex aspect-video w-full items-center justify-center border-b border-dashed border-lavender/40 text-sm text-lavender">
+      TODO: picture
+    </div>
+  )
+
+  return (
+    <CardShell
+      project={project}
+      className="flex h-full flex-col overflow-hidden rounded-2xl border border-lavender/20 bg-canvas"
+    >
+      {primary ? (
+        <a href={primary.href} target="_blank" rel="noreferrer">
+          {picture}
+        </a>
+      ) : (
+        picture
       )}
       <div className="flex flex-1 flex-col p-6">
-        <h3 className="text-2xl font-bold">{project.title}</h3>
+        <h3 className="text-2xl font-bold">
+          {primary ? (
+            <a
+              href={primary.href}
+              target="_blank"
+              rel="noreferrer"
+              className="underline decoration-transparent underline-offset-4 transition-colors hover:decoration-lavender"
+            >
+              {project.title}
+              <span aria-hidden="true"> ➚</span>
+            </a>
+          ) : (
+            project.title
+          )}
+        </h3>
         <p className="mt-3 text-ink/90">{project.summary}</p>
         <ul className="mt-4 space-y-1 text-lavender">
           {project.highlights.map((highlight) => (
             <li key={highlight}>{highlight}</li>
           ))}
         </ul>
-        {project.links && (
-          <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
-            {project.links.map((item) => (
-              <li key={item.href}>
-                <a className={link} href={item.href} target="_blank" rel="noreferrer">
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
+        <CardLinks project={project} className="mt-4" />
         <TechTags tech={project.tech} />
       </div>
-    </li>
+    </CardShell>
   )
 }
 
 function SmallCard({ project }: { project: Project }) {
   return (
-    <li className="flex flex-col rounded-xl border border-lavender/20 bg-canvas p-5">
+    <CardShell
+      project={project}
+      className="flex h-full flex-col rounded-xl border border-lavender/20 bg-canvas p-5"
+    >
       <h4 className="font-bold">{project.title}</h4>
       <p className="mt-2 text-sm text-ink/90">{project.summary}</p>
       {project.highlights.length > 0 && (
@@ -69,19 +141,9 @@ function SmallCard({ project }: { project: Project }) {
           ))}
         </ul>
       )}
-      {project.links && (
-        <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
-          {project.links.map((item) => (
-            <li key={item.href}>
-              <a className={link} href={item.href} target="_blank" rel="noreferrer">
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
+      <CardLinks project={project} className="mt-3 text-sm" />
       <TechTags tech={project.tech} />
-    </li>
+    </CardShell>
   )
 }
 
