@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { projects, type Project } from '../content/projects'
+import RevealItem from './RevealItem'
 
 const link =
   'text-lavender underline decoration-lavender/40 underline-offset-4 hover:decoration-lavender'
@@ -23,15 +24,17 @@ function TechTags({ tech }: { tech: string[] }) {
 function CardShell({
   project,
   className,
+  delay,
   children,
 }: {
   project: Project
   className: string
+  delay: number
   children: ReactNode
 }) {
   const only = project.links?.length === 1 ? project.links[0] : null
   return (
-    <li>
+    <RevealItem delay={delay}>
       {only ? (
         <a
           href={only.href}
@@ -44,7 +47,7 @@ function CardShell({
       ) : (
         <div className={className}>{children}</div>
       )}
-    </li>
+    </RevealItem>
   )
 }
 
@@ -66,7 +69,7 @@ function CardLinks({ project, className }: { project: Project; className: string
   )
 }
 
-function FeaturedCard({ project }: { project: Project }) {
+function FeaturedCard({ project, delay }: { project: Project; delay: number }) {
   const links = project.links ?? []
   const primary = links.length > 1 ? links[0] : null
 
@@ -88,6 +91,7 @@ function FeaturedCard({ project }: { project: Project }) {
   return (
     <CardShell
       project={project}
+      delay={delay}
       className="flex h-full flex-col overflow-hidden rounded-2xl border border-lavender/20 bg-canvas"
     >
       {primary ? (
@@ -126,10 +130,11 @@ function FeaturedCard({ project }: { project: Project }) {
   )
 }
 
-function SmallCard({ project }: { project: Project }) {
+function SmallCard({ project, delay }: { project: Project; delay: number }) {
   return (
     <CardShell
       project={project}
+      delay={delay}
       className="flex h-full flex-col rounded-xl border border-lavender/20 bg-canvas p-5"
     >
       <h4 className="font-bold">{project.title}</h4>
@@ -155,16 +160,16 @@ function Projects() {
     <div className="w-full max-w-5xl">
       <h2 className="text-3xl font-bold">projects</h2>
       <ul className="mt-8 grid gap-6 md:grid-cols-2">
-        {featured.map((project) => (
-          <FeaturedCard key={project.slug} project={project} />
+        {featured.map((project, i) => (
+          <FeaturedCard key={project.slug} project={project} delay={(i % 2) * 100} />
         ))}
       </ul>
       {others.length > 0 && (
         <>
           <h3 className="mt-10 text-lg font-bold text-mist">other projects</h3>
           <ul className="mt-4 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-            {others.map((project) => (
-              <SmallCard key={project.slug} project={project} />
+            {others.map((project, i) => (
+              <SmallCard key={project.slug} project={project} delay={(i % 3) * 100} />
             ))}
           </ul>
         </>

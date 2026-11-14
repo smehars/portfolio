@@ -12,7 +12,7 @@ function About() {
         </h1>
         <p className="mt-6 text-lg leading-relaxed text-ink/90">
           I’m a Software Systems student at SFU, graduating in April 2028, and I like building
-          things people actually use, especially backend systems. I got into tech while completing
+          things that people actually use, especially backend systems. I got into tech while completing
           my Associate of Science in Computer Science at Langara College before transferring to SFU,
           where I’m now president of the Software Systems Student Society and spend a lot of my time
           running events for the community.

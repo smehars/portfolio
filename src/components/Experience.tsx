@@ -1,4 +1,5 @@
 import { roles } from '../content/experience'
+import RevealItem from './RevealItem'
 
 const todo = 'rounded border border-dashed border-lavender/50 px-1.5 py-0.5 text-sm text-lavender'
 const siteCard = 'block h-full rounded-xl border border-lavender/20 bg-canvas p-5'
@@ -62,7 +63,7 @@ function Experience() {
             </ul>
             {role.sites && (
               <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:-mr-24 lg:grid-cols-3">
-                {role.sites.map((site) => {
+                {role.sites.map((site, i) => {
                   const body = (
                     <>
                       <h4 className="font-bold">
@@ -75,7 +76,7 @@ function Experience() {
                     </>
                   )
                   return (
-                    <li key={site.name}>
+                    <RevealItem key={site.name} delay={i * 100}>
                       {site.href ? (
                         <a
                           href={site.href}
@@ -88,7 +89,7 @@ function Experience() {
                       ) : (
                         <div className={siteCard}>{body}</div>
                       )}
-                    </li>
+                    </RevealItem>
                   )
                 })}
               </ul>

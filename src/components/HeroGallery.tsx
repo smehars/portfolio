@@ -35,10 +35,22 @@ const reveal =
 
 const arrow = `absolute top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-lavender/30 bg-canvas/80 text-lavender hover:bg-canvas-3 ${reveal}`
 
+const sizes =
+  '(min-width: 1280px) 576px, (min-width: 1024px) 480px, (min-width: 768px) 416px, 100vw'
+const srcSet = (src: string) => `${src} 800w, ${src.replace('.webp', '-1200.webp')} 1200w`
+
 function HeroGallery() {
-  const [index, setIndex] = useState(0)
+  // `previous` stays underneath while the new photo fades in over it.
+  const [{ index, previous }, setShown] = useState<{ index: number; previous: number | null }>({
+    index: 0,
+    previous: null,
+  })
   const photo = photos[index]
-  const step = (by: number) => setIndex((i) => (i + by + photos.length) % photos.length)
+  const step = (by: number) =>
+    setShown((shown) => ({
+      index: (shown.index + by + photos.length) % photos.length,
+      previous: shown.index,
+    }))
 
   return (
     <div
@@ -47,16 +59,29 @@ function HeroGallery() {
       aria-label="Photos of Mehar"
       className="group relative mx-auto w-full max-w-sm md:w-[26rem] md:max-w-none lg:w-[30rem] xl:w-[36rem]"
     >
-      <img
-        key={photo.src}
-        src={photo.src}
-        srcSet={`${photo.src} 800w, ${photo.src.replace('.webp', '-1200.webp')} 1200w`}
-        sizes="(min-width: 1280px) 576px, (min-width: 1024px) 480px, (min-width: 768px) 416px, 100vw"
-        alt={photo.alt}
-        width={800}
-        height={1067}
-        className="aspect-[3/4] w-full rounded-2xl border border-lavender/20 object-cover"
-      />
+      <div className="relative overflow-hidden rounded-2xl border border-lavender/20">
+        {previous !== null && (
+          <img
+            key={`under-${photos[previous].src}`}
+            src={photos[previous].src}
+            srcSet={srcSet(photos[previous].src)}
+            sizes={sizes}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        )}
+        <img
+          key={photo.src}
+          src={photo.src}
+          srcSet={srcSet(photo.src)}
+          sizes={sizes}
+          alt={photo.alt}
+          width={800}
+          height={1067}
+          className="relative aspect-[3/4] w-full object-cover motion-safe:animate-fade-in"
+        />
+      </div>
       <button
         type="button"
         className={`${arrow} left-3`}
