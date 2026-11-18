@@ -7,11 +7,9 @@ export default {
   theme: {
     extend: {
       keyframes: {
-        "fade-in": { from: { opacity: "0" }, to: { opacity: "1" } },
-      },
+        "fade-in": { from: { opacity: "0" }, to: { opacity: "1" } },      },
       animation: {
-        "fade-in": "fade-in 400ms ease-out",
-      },
+        "fade-in": "fade-in 400ms ease-out",      },
       fontFamily: {
         sans: ["DM Sans", "sans-serif"],
       },

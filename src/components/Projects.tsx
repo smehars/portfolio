@@ -92,7 +92,7 @@ function FeaturedCard({ project, delay }: { project: Project; delay: number }) {
     <CardShell
       project={project}
       delay={delay}
-      className="flex h-full flex-col overflow-hidden rounded-2xl border border-lavender/20 bg-canvas"
+      className="glow flex h-full flex-col overflow-hidden rounded-2xl border border-lavender/20 bg-canvas"
     >
       {primary ? (
         <a href={primary.href} target="_blank" rel="noreferrer">
@@ -135,7 +135,7 @@ function SmallCard({ project, delay }: { project: Project; delay: number }) {
     <CardShell
       project={project}
       delay={delay}
-      className="flex h-full flex-col rounded-xl border border-lavender/20 bg-canvas p-5"
+      className="glow flex h-full flex-col rounded-xl border border-lavender/20 bg-canvas p-5"
     >
       <h4 className="font-bold">{project.title}</h4>
       <p className="mt-2 text-sm text-ink/90">{project.summary}</p>

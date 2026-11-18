@@ -1,3 +1,57 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Cursor glow for cards: a soft light follows the mouse inside the card and
+   brightens the part of the border nearest to it. useCardGlow sets --x and
+   --y. Only on devices with a real mouse. */
+@layer components {
+  @media (hover: hover) {
+    .glow {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .glow::before,
+    .glow::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 300ms ease-out;
+    }
+
+    /* The light inside the card, behind the text. */
+    .glow::before {
+      z-index: -1;
+      background: radial-gradient(
+        28rem circle at var(--x) var(--y),
+        rgb(205 180 219 / 0.08),
+        transparent 45%
+      );
+    }
+
+    /* The brighter edge: the same light, masked down to a 1px ring. */
+    .glow::after {
+      z-index: 1;
+      padding: 1px;
+      background: radial-gradient(
+        18rem circle at var(--x) var(--y),
+        rgb(221 184 255 / 0.6),
+        transparent 50%
+      );
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+
+    .glow:hover::before,
+    .glow:hover::after {
+      opacity: 1;
+    }
+  }
+}

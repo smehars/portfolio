@@ -2,7 +2,7 @@ import { roles } from '../content/experience'
 import RevealItem from './RevealItem'
 
 const todo = 'rounded border border-dashed border-lavender/50 px-1.5 py-0.5 text-sm text-lavender'
-const siteCard = 'block h-full rounded-xl border border-lavender/20 bg-canvas p-5'
+const siteCard = 'glow block h-full rounded-xl border border-lavender/20 bg-canvas p-5'
 
 const highlight = 'font-semibold text-lilac'
 

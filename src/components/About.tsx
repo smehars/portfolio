@@ -1,14 +1,18 @@
 import HeroGallery from './HeroGallery'
+import ScrambleText from './ScrambleText'
 
 const link =
   'text-lavender underline decoration-lavender/40 underline-offset-4 hover:decoration-lavender'
 
 function About() {
   return (
-    <div className="grid w-full max-w-6xl items-center gap-10 md:gap-14 md:grid-cols-[1fr_auto]">
+    <div className="relative grid w-full max-w-6xl items-center gap-10 md:gap-14 md:grid-cols-[1fr_auto]">
       <div>
         <h1 className="text-4xl font-bold">
-          hello, i'm <span className="text-lavender">mehar</span>
+          hello, i'm{' '}
+          <span className="text-lavender">
+            <ScrambleText text="mehar" />
+          </span>
         </h1>
         <p className="mt-6 text-lg leading-relaxed text-ink/90">
           I’m a Software Systems student at SFU, graduating in April 2028, and I like building
