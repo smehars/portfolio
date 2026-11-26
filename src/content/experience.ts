@@ -42,7 +42,8 @@ export const roles: Role[] = [
       },
       {
         name: 'Patch the System',
-        summary: 'Event site for the AI-assisted defensive CTF. Developed and maintained.',
+        summary:
+          'Event site for the AI-assisted defensive CTF. Improved the first version and added an instructions page with screenshots.',
         href: 'https://patch.sfussss.org',
       },
       {
@@ -59,15 +60,15 @@ export const roles: Role[] = [
     ],
   },
   {
-    title: 'Backend Lead and Event Logistics Lead',
-    org: 'Patch the System CTF, with the SFU Cybersecurity Club',
-    dates: 'Competition day: Nov 21, 2026',
+    title: 'Technical Lead',
+    org: 'Patch the System CTF, SSSS with the SFU Cybersecurity Club',
+    dates: 'Aug – Nov 2026',
     points: [
-      'Lead the **backend and infrastructure** for an AI-assisted defensive CTF, planned for **10 teams of 4**, on a dev team of about 8: the **CTFd** scoring platform, hosted challenge apps, and team repositories.',
-      'Built one of the challenge platforms on a reskinned DVGA app, for **6 main challenges**. Each has an automated exploit test and a reference patch.',
-      "Wrote several of the **grading pipeline's** scripts, working with a teammate.",
-      'Ran **two playtests** to debug the entire event software pipeline.',
-      "Set up the **AI coding assistant** for teams to use inside a **Docker** container, with specific guarded permissions.",
+      'One of **3 event leads** for a one-day defensive CTF where student teams found security bugs in 3 deliberately vulnerable web apps, then patched them. Led the **8-person backend team** within a 22-person organizing team.',
+      "Designed the **automated fix grader**: a team pushes a fix, the grader builds their app in **Docker**, runs a hidden exploit test and the app's regression tests, then posts the result on GitHub and adds points on **CTFd**. It graded **309 fixes** from **9 teams** on the event day.",
+      'Wrote **3 of the 15 challenges** (command injection, SQL injection and weak crypto), each with a reference patch and an exploit test, and checked every other challenge end to end.',
+      'Built the **read-only AI assistant** teams used for code explanations and hints on macOS, Windows and Linux, and ran per-team model keys with a $10 cap (**$56 of $100** spent).',
+      'Ran a morning rehearsal that caught a grader restart issue before teams arrived, then mentored teams in person through setup and AI access problems for **31 competitors**.',
     ],
   },
   {

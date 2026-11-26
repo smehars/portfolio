@@ -84,7 +84,7 @@ export const projects: Project[] = [
     highlights: ['Course Project for CMPT 353'],
     tech: ['Python', 'pandas', 'scikit-learn', 'scikit-image'],
     links: [
-      { label: 'Report➚', href: 'https://docs.google.com/document/d/19kfwf-AVasbbQwr64GgCBWg3IgyutoYt800BestO8pw/edit?usp=sharing'},
+      { label: 'Report➚', href: 'https://docs.google.com/document/d/19kfwf-AVasbbQwr64GgCBWg3IgyutoYt800BestO8pw/view'},
     ],
   },
   {

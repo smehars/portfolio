@@ -39,6 +39,17 @@ const sizes =
   '(min-width: 1280px) 576px, (min-width: 1024px) 480px, (min-width: 768px) 416px, 100vw'
 const srcSet = (src: string) => `${src} 800w, ${src.replace('.webp', '-1200.webp')} 1200w`
 
+// Starts downloading the photos either side of `i`, so the crossfade plays on
+// a loaded photo. Only called once someone reaches for the gallery, so it
+// doesn't compete with the first photo on page load.
+function preloadAround(i: number) {
+  for (const by of [-1, 1]) {
+    const img = new Image()
+    img.sizes = sizes
+    img.srcset = srcSet(photos[(i + by + photos.length) % photos.length].src)
+  }
+}
+
 function HeroGallery() {
   // `previous` stays underneath while the new photo fades in over it.
   const [{ index, previous }, setShown] = useState<{ index: number; previous: number | null }>({
@@ -46,17 +57,21 @@ function HeroGallery() {
     previous: null,
   })
   const photo = photos[index]
-  const step = (by: number) =>
+  const step = (by: number) => {
     setShown((shown) => ({
       index: (shown.index + by + photos.length) % photos.length,
       previous: shown.index,
     }))
+    preloadAround((index + by + photos.length) % photos.length)
+  }
 
   return (
     <div
       role="group"
       aria-roledescription="carousel"
       aria-label="Photos of Mehar"
+      onPointerEnter={() => preloadAround(index)}
+      onFocus={() => preloadAround(index)}
       className="group relative mx-auto w-full max-w-sm md:w-[26rem] md:max-w-none lg:w-[30rem] xl:w-[36rem]"
     >
       <div className="relative overflow-hidden rounded-2xl border border-lavender/20">
@@ -79,6 +94,7 @@ function HeroGallery() {
           alt={photo.alt}
           width={800}
           height={1067}
+          fetchPriority={index === 0 ? 'high' : undefined}
           className="relative aspect-[3/4] w-full object-cover motion-safe:animate-fade-in"
         />
       </div>

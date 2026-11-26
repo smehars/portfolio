@@ -1,8 +1,6 @@
 import HeroGallery from './HeroGallery'
 import ScrambleText from './ScrambleText'
-
-const link =
-  'text-lavender underline decoration-lavender/40 underline-offset-4 hover:decoration-lavender'
+import { link } from '../linkStyle'
 
 function About() {
   return (

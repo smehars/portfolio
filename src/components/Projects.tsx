@@ -1,9 +1,7 @@
 import type { ReactNode } from 'react'
 import { projects, type Project } from '../content/projects'
 import RevealItem from './RevealItem'
-
-const link =
-  'text-lavender underline decoration-lavender/40 underline-offset-4 hover:decoration-lavender'
+import { link } from '../linkStyle'
 
 function TechTags({ tech }: { tech: string[] }) {
   return (
