@@ -27,6 +27,12 @@ export const projects: Project[] = [
     ],
     tech: ['Python', 'discord.py', 'Docker', 'GitHub Actions', 'ECR', 'App Runner'],
     featured: true,
+    image: {
+      src: '/images/coursebot.webp',
+      alt: 'coursebot replying in Discord to the /course command with a card for CMPT 130: the course description, recent offerings and instructors, credits, and prerequisites.',
+      width: 1177,
+      height: 662,
+    },
     links: [{ label: 'GitHub➚', href: 'https://github.com/ssss-sfu/coursebot' }],
   },
   {
